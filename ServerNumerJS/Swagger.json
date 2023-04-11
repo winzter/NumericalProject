@@ -1,0 +1,203 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Numerical Method API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "components": {
+    "securitySchemes": {
+        "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+        }
+    }
+  },
+  "paths": {
+    "/gentoken/{Username}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name":"Username",
+            "in":"path",
+            "required":"true",
+            "schema":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/checktoken": {
+      "get": {
+        "description": "",
+        "security": [
+          {
+            "bearerAuth":[]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rootofequation": {
+      "get": {
+        "summary":"Find set of equations",
+        "description":"Find set of all equations",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/rootofequation/{Topic}": {
+      "get": {
+        "summary":"Find set of equations",
+        "description":"Find set of equations by topic ex. Bisection , OnePoint",
+        "parameters": [
+          {
+            "name":"Topic",
+            "in":"path",
+            "schema":{
+              "type":"string"
+            },
+            "required":"true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/postdata": {
+      "post": {
+        "description": "",
+        "security": [
+          {
+            "bearerAuth":[]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type":"string",
+                    "example": "Bisection100"
+                  },
+                  "equation": {
+                    "type":"string",
+                    "example": "(x+5)-10"
+                  },
+                  "xl": {
+                    "type":"string",
+                    "example": "3"
+                  },
+                  "xr": {
+                    "type":"string",
+                    "example": "6"
+                  },
+                  "label": {
+                    "type":"string",
+                    "example": "(x+5)-10"
+                  },
+                  "group": {
+                    "type":"string",
+                    "example": "Example From API"
+                  },
+                  "topic":{
+                    "type":"string",
+                    "example":"Bisection"
+                  }
+                }
+              }
+            }
+          }
+        },
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type":"string"
+                  },
+                  "password": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type":"string"
+                  },
+                  "password": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+  
+}

@@ -1,0 +1,73 @@
+// import { evaluate } from 'mathjs';
+
+// interface BisectionObject {
+//   iteration: number;
+//   Xl: number;
+//   Xm: number;
+//   Xr: number;
+//   Err: number;
+//   ErrNotDecimal: number;
+// }
+
+// const data: BisectionObject[] = [];
+
+// const error = (xold: number, xnew: number): number => Math.abs((xnew - xold) / xnew) * 100;
+
+// const CalBisec = (xl: number, xr: number,equation:string): number=> {
+//     let xm, fXm, fXr, ea=100;
+//     let iter = 0;
+//     const MAX = 50;
+//     let obj: BisectionObject = {} as BisectionObject;
+
+//     do {
+//       xm = (xl + xr) / 2.0;
+//       fXr = evaluate(equation, { x : xr });
+//       fXm = evaluate(equation, { x: xm });
+//       iter++;
+
+//       if (fXm * fXr > 0) {
+//         ea = error(xr, xm);
+//         obj = {
+//           iteration: iter,
+//           Xl: xl,
+//           Xm: xm,
+//           Xr: xr,
+//           Err: ea,
+//           ErrNotDecimal: Math.round(ea),
+//         };
+//         data.push(obj);
+//         xr = xm;
+//       } else if (fXm * fXr < 0) {
+//         ea = error(xl, xm);
+//         obj = {
+//           iteration: iter,
+//           Xl: xl,
+//           Xm: xm,
+//           Xr: xr,
+//           Err: ea,
+//           ErrNotDecimal: Math.round(ea),
+//         }
+//         data.push(obj);
+//         xl = xm;
+//       }else{
+//         ea = 0;
+//         obj = {
+//           iteration: iter,
+//           Xl: xl,
+//           Xm: xm,
+//           Xr: xr,
+//           Err: ea,
+//           ErrNotDecimal: Math.round(ea),
+//         }
+//         data.push(obj);
+//         break
+//       }
+//     } while (ea > 0.000001 && iter < MAX);
+//     return 3
+// };
+
+//   describe("add", () => {
+//     test("adds 1 + 2 to equal 3", () => {
+//       expect(CalBisec(1, 2,"(x^2)-9")).toBe(3);
+//     });
+//   });
