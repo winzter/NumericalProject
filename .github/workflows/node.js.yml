@@ -36,4 +36,6 @@ jobs:
       run: |
         cd ServerNumerJS
         npm test
+    - name: Docker build
+      run: docker-compose build
       
