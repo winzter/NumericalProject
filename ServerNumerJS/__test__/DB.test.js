@@ -6,7 +6,7 @@ const MathModel = require('../model/MathModel');
 describe("Connection", () => {
     beforeAll(async()=>{
         await mongoose.connect(`mongodb+srv://admin:1234@cluster0.cfglwqy.mongodb.net/?retryWrites=true&w=majority`)
-    })
+    },10000)
 
     test("find user",async()=>{
         const findUser = await AccountModel.findOne({username:"admin"})
