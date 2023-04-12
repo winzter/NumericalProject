@@ -157,7 +157,7 @@ function Bisection() {
             data.push(obj);
             break
           }
-        } while (ea > 0.000001 && iter < MAX);
+        } while (ea > UserInput.Error && iter < MAX);
     
         setUserInput({
           ...UserInput,
@@ -260,55 +260,7 @@ function Bisection() {
       <Group position="center">
         <Grid justify='center'>
           <Grid.Col span="content">
-          <form onSubmit={calculateRoot}>
-          <TextInput
-              data-testid="equ"
-              label="Input F(x)"
-              onChange={SetEquation}
-              required
-            />
-            <NumberInput
-                data-testid="xl"
-                label="xl"
-                onChange={SetXL}
-                precision={2}
-                required
-            />
-            <NumberInput
-                data-testid="xr"
-                label="xr"
-                onChange={SetXR}
-                precision={2}
-                required
-            />
-            {/* <NumberInput
-              data-testid="err"
-              label="Error"
-              onChange={SetERROR}
-              value={UserInput.Error}
-              precision={6}
-              step={0.000001}
-              min={0}
-              required
-            /> */}
-            <Button 
-              data-testid="btn"
-              mt="md" 
-              size='sm' 
-              type='submit' 
-              variant="gradient" 
-              gradient={{ from: 'teal', to: 'blue', deg: 60 }}>
-                Calculate
-            </Button>
-
-            <div data-testid="ans">
-              <h2 >Answer = {UserInput.X}</h2>
-            </div>
-            
-          </form>
-          
-              
-            {/* <InputForm 
+            <InputForm 
               starter={SetStarter}
               calculateRoot={calculateRoot} 
               setEquationFx={SetEquation} 
@@ -322,18 +274,18 @@ function Bisection() {
               setXR={SetXR}
               setERROR={SetERROR}
               setExampleData={SetExampleData}
-            /> */}
+            />
           </Grid.Col>
-          {/* <Grid.Col span="content">
+          <Grid.Col span="content">
             <Chart data={newData}/>
-          </Grid.Col> */}
+          </Grid.Col>
         </Grid>
       </Group>
-      {/* {Status && <EquationChart Equation={PropsEquation} RegX={UserInput.starter} Ans={UserInput.X}/>}
+      {Status && <EquationChart Equation={PropsEquation} RegX={UserInput.starter} Ans={UserInput.X}/>}
       {Status && <TableOutput 
         data={newData} 
         label={label}
-      />} */}
+      />}
       <Transition mounted={InValid} transition="slide-up" duration={1000} timingFunction='ease'>
         {(styles)=><Dialog opened={InValid} withBorder={false} style={{...styles,padding:0}}>
           <Alert color='red' ref={clickOutside} icon={<IconAlertTriangle strokeWidth={2.5}/>} variant='filled' title="Invalid Input!!">
