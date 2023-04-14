@@ -1,11 +1,15 @@
 import React , { useState } from 'react'
+import { IconAlertTriangle ,IconChevronLeft } from '@tabler/icons-react';
+import {Link} from 'react-router-dom';
+import { useClickOutside } from '@mantine/hooks';
+import { Grid, Group , Container , createStyles,Transition, Alert, Dialog } from '@mantine/core';
+import Chart from '../../components/Chart';
 import InputForm from '../../components/InputForm';
 import Header from '../../components/Header';
 import TableOutput from '../../components/TableOutput';
 import { evaluate } from 'mathjs'
-import Chart from '../../components/Chart';
 import EquationChart from '../../components/EquationChart';
-import { Grid, Group } from '@mantine/core';
+
 
 interface SecantObject{
     iteration:number,
@@ -29,7 +33,23 @@ interface LabelFormSecant{
     Err:string
 }
 
+const useStyles = createStyles((theme)=>({
+    linkBack:{
+        textDecoration:"none",
+        color:theme.fn.primaryColor(),
+        fontWeight:1000
+      },
+    
+      icon:{
+        verticalAlign:"middle",
+        height:'20px'
+      },
+  }))
+
 function Secant() {
+    const { classes } = useStyles()
+    const [InValid,setInValid] = useState<boolean>(false)
+    const clickOutside = useClickOutside(()=>{setInValid(false)})
     const data:SecantObject[] = []
     const [UserInput,setUserInput] = useState({
         Equation:"(x^2)-7",
@@ -64,16 +84,18 @@ function Secant() {
 
     const calSecant = (x0:number,x1:number,Scope:string)=>{
        console.log(Scope);
-       
         let fx,fxold,x2=0,ea;
         let iter=1;
         const MAX = 50;
+        setStatus(true)
 
         do{
             fx = evaluate(UserInput.Equation,{[Scope]:x1});
             fxold = evaluate(UserInput.Equation,{[Scope]:x0});
             if(fx-fxold === 0){
                 console.log("Can't divide by zero!");
+                setInValid(true)
+                setStatus(false)
                 break
             }
             x2 = x1 - ((fx*(x1-x0)))/(fx-fxold);
@@ -105,8 +127,6 @@ function Secant() {
     const calculateRoot = (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         const Scope:any= Regex(UserInput.Equation);
-        console.log(Scope);
-        
         setUserInput((prevState)=>{
             return{
               ...prevState,
@@ -115,7 +135,6 @@ function Secant() {
           })
         calSecant(UserInput.X0,UserInput.X1,Scope);
         setNewData(data)
-        setStatus(true);
         setPropsEquation(UserInput.Equation)
         console.log(data);
     }
@@ -184,7 +203,10 @@ function Secant() {
         })}
       }
   return (
-    <>
+    <Container size="lg" py="xl">
+        <Link to="/rootofequation" className={classes.linkBack}>
+            <span><IconChevronLeft className={classes.icon}/>Back to Root page</span>
+        </Link>
         <Header text="Secant Method"/>
         <Group position='center'>
             <Grid justify='center'>
@@ -216,8 +238,14 @@ function Secant() {
             data={newData}
             label={label}
         />}
-        
-    </>
+        <Transition mounted={InValid} transition="slide-up" duration={1000} timingFunction='ease'>
+        {(styles)=><Dialog opened={InValid} withBorder={false} style={{...styles,padding:0}}>
+          <Alert color='red' ref={clickOutside} icon={<IconAlertTriangle strokeWidth={2.5}/>} variant='filled' title="Invalid Input!!">
+            Can't be divided by zero!
+          </Alert>
+        </Dialog>}
+      </Transition>
+    </Container>
     )
 }
 

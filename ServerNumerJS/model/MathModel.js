@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 const MathSchema = new mongoose.Schema({
     value:String,
-    equation:String,
     xl:String,
     xr:String,
     x0:String,

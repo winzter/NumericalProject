@@ -4,8 +4,10 @@ import Header from '../../components/Header';
 import InputForm from '../../components/InputForm';
 import TableOutput from '../../components/TableOutput';
 import Chart from '../../components/Chart';
-import { Grid, Group } from '@mantine/core';
+import { Grid, Group , Container, createStyles, } from '@mantine/core';
 import EquationChart from '../../components/EquationChart';
+import { IconAlertTriangle ,IconChevronLeft } from '@tabler/icons-react';
+import {Link} from 'react-router-dom';
 
 interface OnepointObject{
     iteration:number,
@@ -25,7 +27,21 @@ interface LabelFormOnePoint {
     labelXL:string,
 }
 
+const useStyles = createStyles((theme)=>({
+    linkBack:{
+        textDecoration:"none",
+        color:theme.fn.primaryColor(),
+        fontWeight:1000
+      },
+    
+      icon:{
+        verticalAlign:"middle",
+        height:'20px'
+      },
+}))
+
 function Onepoint() {
+    const { classes } = useStyles()
     const data:OnepointObject[] = [];
     const [UserInput,setUserInput] = useState({
         EquationFX:"2x-1",
@@ -107,7 +123,7 @@ function Onepoint() {
         setUserInput((prevState)=>{
             return{
                 ...prevState,
-                X:event
+                X0:event
             }
         })
     }
@@ -157,7 +173,10 @@ function Onepoint() {
       }
 
   return (
-    <>
+    <Container size="lg" py="xl">
+        <Link to="/rootofequation" className={classes.linkBack}>
+            <span><IconChevronLeft className={classes.icon}/>Back to Root page</span>
+        </Link>
         <Header text="Onepoint Iteration Method"/>
         <Group position='center'>
             <Grid justify='center'>
@@ -188,7 +207,7 @@ function Onepoint() {
             data={newData}
             label={label}
         />}
-    </>
+    </Container>
   )
 }
 

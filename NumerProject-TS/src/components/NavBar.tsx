@@ -7,7 +7,8 @@ import {
   RightContainer,
   DropdownContainer,
   Dropbtn,
-  DropdownContent
+  DropdownContent,
+  LinkContent
 } from '../styles/Navbar.style'
 
 
@@ -20,26 +21,14 @@ function NavBar() {
         </LeftContainer>
         <RightContainer>
           <DropdownContainer>
-            <Dropbtn>Root Of Equation</Dropbtn>
-            <DropdownContent>
+            <LinkContent to="/login">Sign In</LinkContent>
+            {/* <DropdownContent>
               < NavbarLink to="/bisection">Bisection</NavbarLink>
               < NavbarLink to="/falseposition">False Position</NavbarLink>
               < NavbarLink to="/onepoint">Onepoint Iteration</NavbarLink>
               < NavbarLink to="/newtonraphson">Newton Raphson</NavbarLink>
               < NavbarLink to="/secantmethod">Secant Method</NavbarLink>
-            </DropdownContent>
-          </DropdownContainer>
-          <DropdownContainer>
-            <Dropbtn>Linear Algebraic Equation</Dropbtn>
-            <DropdownContent>
-              < NavbarLink to="/cramer">Cramer</NavbarLink>
-            </DropdownContent>
-          </DropdownContainer>
-          <DropdownContainer>
-            <Dropbtn>Least Square Regression</Dropbtn>
-            <DropdownContent>
-              < NavbarLink to="#">Linear Regression</NavbarLink>
-            </DropdownContent>
+            </DropdownContent> */}
           </DropdownContainer>
         </RightContainer>
       </InnerContainer>

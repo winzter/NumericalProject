@@ -4,8 +4,12 @@ import { evaluate , derivative } from 'mathjs'
 import Header from '../../components/Header';
 import TableOutput from '../../components/TableOutput';
 import Chart from '../../components/Chart';
-import { Grid, Group } from '@mantine/core';
+import { Grid, Group , Container , createStyles, Transition, Alert, Dialog } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+import { IconAlertTriangle ,IconChevronLeft } from '@tabler/icons-react';
+import {Link} from 'react-router-dom';
 import EquationChart from '../../components/EquationChart';
+
 
 interface NewtonObject{
     iteration:number,
@@ -24,7 +28,23 @@ interface LabelFormNewton{
     Err:string
 }
 
+const useStyles = createStyles((theme)=>({
+    linkBack:{
+        textDecoration:"none",
+        color:theme.fn.primaryColor(),
+        fontWeight:1000
+      },
+    
+      icon:{
+        verticalAlign:"middle",
+        height:'20px'
+      },
+  }))
+
 function Newton() {
+    const [InValid,setInValid] = useState<boolean>(false)
+    const clickOutside = useClickOutside(()=>{setInValid(false)})
+    const { classes } = useStyles()
     const data:NewtonObject[] = []
     const [UserInput,setUserInput] = useState({
         X:0,
@@ -46,7 +66,6 @@ function Newton() {
         Xm:`${UserInput.starter.toUpperCase()}`,
         Err:`Error`
     }
-    // const [id,setId] = useState("#t")
 
 
     const error = (xold:number,xnew:number)=>{
@@ -57,14 +76,14 @@ function Newton() {
         let fx,fxp,xnew=0,ea;
         let iter=0;
         const MAX = 50;
-
+        setStatus(true)
         do{ 
             fx = evaluate(UserInput.Equation,{[Scope]:x});
             fxp = derivative(UserInput.Equation,`${[Scope]}`).evaluate({[Scope]:x});
-            console.log(fxp);
             if(fxp === 0){
                 console.log("Error can't divide by zero");
-                
+                setInValid(true)
+                setStatus(false)
                 break
             }
             xnew = x - (fx/fxp);
@@ -92,7 +111,6 @@ function Newton() {
 
     const calculateRoot = (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-        
         const Scope:any = Regex(UserInput.Equation)
         calNewton(UserInput.X,Scope);
         setUserInput((prevState)=>{
@@ -102,8 +120,7 @@ function Newton() {
             }
         })
         setPropsEquation(UserInput.Equation)
-        setNewData(data)
-        setStatus(true) 
+        setNewData(data) 
         console.log(data);
     }
     const SetEquation = (event:React.ChangeEvent<HTMLInputElement>)=>{
@@ -157,7 +174,10 @@ function Newton() {
         })}
       }
   return (
-    <> 
+    <Container size="lg" py="xl">
+        <Link to="/rootofequation" className={classes.linkBack}>
+            <span><IconChevronLeft className={classes.icon}/>Back to Root page</span>
+        </Link> 
         <Header text="Newton Raphson Method"/>
         <Group position='center'>
             <Grid justify='center'>
@@ -187,7 +207,14 @@ function Newton() {
             data={newData}
             label={label}
         />}
-    </>
+        <Transition mounted={InValid} transition="slide-up" duration={1000} timingFunction='ease'>
+        {(styles)=><Dialog opened={InValid} withBorder={false} style={{...styles,padding:0}}>
+          <Alert color='red' ref={clickOutside} icon={<IconAlertTriangle strokeWidth={2.5}/>} variant='filled' title="Invalid Input!!">
+            Can't be divided by zero!
+          </Alert>
+        </Dialog>}
+      </Transition>
+    </Container>
     )
 }
 

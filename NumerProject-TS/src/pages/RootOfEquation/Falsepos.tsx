@@ -1,13 +1,16 @@
-import React , { Fragment, useState }from 'react';
+import React , { useState }from 'react';
 import InputForm from '../../components/InputForm';
 import TableOutput from '../../components/TableOutput';
 import { evaluate } from 'mathjs'
 import Header from '../../components/Header';
 import Chart from '../../components/Chart';
 import { useClickOutside } from '@mantine/hooks';
-import { IconAlertTriangle } from '@tabler/icons-react';
+import { IconAlertTriangle ,IconChevronLeft } from '@tabler/icons-react';
+import {Link} from 'react-router-dom';
 import EquationChart from '../../components/EquationChart';
 import {
+  Container,
+  createStyles,
   Group,
   Grid,
   Transition,
@@ -37,8 +40,21 @@ interface LabelForm {
     labelXR:string
 }
 
-function Falsepos() {
+const useStyles = createStyles((theme)=>({
+  linkBack:{
+      textDecoration:"none",
+      color:theme.fn.primaryColor(),
+      fontWeight:1000
+    },
+  
+    icon:{
+      verticalAlign:"middle",
+      height:'20px'
+    },
+}))
 
+function Falsepos() {
+    const { classes } = useStyles()
     const data:FalsePostionObject[] =[];
     const clickOutside = useClickOutside(()=>{setInValid(false)})
     const [PropsEquation,setPropsEquation] = useState("(x^4)-13")
@@ -241,7 +257,10 @@ function Falsepos() {
           }
     
       return (
-        <>
+        <Container size="lg" py="xl">
+            <Link to="/rootofequation" className={classes.linkBack}>
+                <span><IconChevronLeft className={classes.icon}/>Back to Root page</span>
+            </Link>
             <Header text="False Position Method"/>
             <Group position="center">
               <Grid justify='center'>
@@ -282,7 +301,7 @@ function Falsepos() {
                 </Alert>
               </Dialog>}
             </Transition>
-        </>
+        </Container>
     )
 }
 

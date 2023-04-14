@@ -5,11 +5,11 @@ import TableOutput from '../../components/TableOutput';
 import Header from '../../components/Header';
 import Chart from '../../components/Chart';
 import { useClickOutside } from '@mantine/hooks';
-import { IconAlertTriangle } from '@tabler/icons-react';
+import { IconAlertTriangle , IconChevronLeft } from '@tabler/icons-react';
+import {Link} from 'react-router-dom';
 import {
-  TextInput,
-  NumberInput,
-  Button,
+  Container,
+  createStyles,
   Group,
   Grid,
   Transition,
@@ -43,9 +43,24 @@ interface X{
   x:number
 }
 
+const useStyles = createStyles((theme)=>({
+  linkBack:{
+      textDecoration:"none",
+      color:theme.fn.primaryColor(),
+      fontWeight:1000
+    },
+  
+    icon:{
+      verticalAlign:"middle",
+      height:'20px'
+    },
+}))
+
+
 
 function Bisection() {
 
+    const { classes } = useStyles()
     const [newData, setNewData] = useState<BisectionObject[]>([]);
     const [InValid,setInValid] = useState<boolean>(false)
     const clickOutside = useClickOutside(()=>{setInValid(false)})
@@ -175,8 +190,6 @@ function Bisection() {
     
     const calculateRoot = (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
-        //console.log(UserInput);
-        
         const xlnum: number = UserInput.XL;
         const xrnum: number = UserInput.XR;
         const Scope:any = Regex(UserInput.Equation);
@@ -255,7 +268,10 @@ function Bisection() {
     }
 
   return (
-    <>
+    <Container size="lg" py="xl">
+      <Link to="/rootofequation" className={classes.linkBack}>
+          <span><IconChevronLeft className={classes.icon}/>Back to Root page</span>
+      </Link>
       <Header text="Bisection Method"/>
       <Group position="center">
         <Grid justify='center'>
@@ -295,7 +311,7 @@ function Bisection() {
           </Alert>
         </Dialog>}
       </Transition>
-    </>
+    </Container>
   )
 }
 

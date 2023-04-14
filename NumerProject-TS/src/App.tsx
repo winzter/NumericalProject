@@ -11,6 +11,7 @@ import Secant from './pages/RootOfEquation/Secant';
 import Cramer from './pages/Linear Agebra/Cramer';
 import AddEquation from './pages/AddEquation';
 import Login from './pages/Login';
+import RootTable from './pages/RootOfEquation/RootTable';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/rootofequation" element={<RootTable/>}/>
         <Route path="/bisection" element={<Bisection/>}/>
         <Route path="/falseposition" element={<Falsepos/>}/>
         <Route path="/onepoint" element={<Onepoint/>}/>

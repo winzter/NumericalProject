@@ -35,7 +35,9 @@ interface InputField {
     setEquationGx?:(e:React.ChangeEvent<HTMLInputElement>)=>void,
 }
 
+
 function InputForm(props:InputField) {
+    
     const [apiData,setApiData] = useState<{value:string,label:string}[]>([])
 
     useEffect(()=>{

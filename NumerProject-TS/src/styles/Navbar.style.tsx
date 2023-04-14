@@ -27,7 +27,7 @@ export const RightContainer = styled.div`
 
 export const DropdownContainer = styled.div`
   overflow: hidden;
-  font-size: 12px;  
+  font-size: 15px; 
   border: none;
   outline: none;
   color: #020202;
@@ -60,6 +60,22 @@ export const NavbarLink = styled(Link)`
   display: block;
   text-align: left;
   margin: 1rem;
+`
+
+
+export const LinkContent = styled(Link)`
+  float: none;
+  color: #020202;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  margin: 1rem;
+  :hover{
+    background-color:#dee7ff;
+    transition: 0.3s;
+    border-radius: 10px;
+  }
 `
 
 export const DropdownContent = styled.div`
